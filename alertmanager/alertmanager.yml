@@ -7,4 +7,4 @@ route:
 receivers:
   - name: 'webhook_receiver'
     webhook_configs:
-      - url: 'http://your-webhook-url'
+      - url: 'http://alert-service:4000/alert'

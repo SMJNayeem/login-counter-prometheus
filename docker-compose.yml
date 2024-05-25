@@ -36,3 +36,10 @@ services:
       - "9093:9093"
     volumes:
       - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+
+  alert-service:
+    build: ./alert-service
+    environment:
+      - PORT=4000
+    ports:
+      - "4000:4000"
