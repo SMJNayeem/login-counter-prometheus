@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  server1:
+    build: ./server1
+    environment:
+      - PORT=3001
+    ports:
+      - "3001:3001"
+
+  server2:
+    build: ./server2
+    environment:
+      - PORT=3002
+    ports:
+      - "3002:3002"
+
+  server3:
+    build: ./server3
+    environment:
+      - PORT=3003
+    ports:
+      - "3003:3003"
+
+  prometheus:
+    build: ./prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules.yml:/etc/prometheus/alert.rules.yml
+
+  alertmanager:
+    build: ./alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
