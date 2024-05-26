@@ -1,11 +1,19 @@
 groups:
-  - name: request_count_alerts
+  - name: high_request_count
     rules:
       - alert: HighRequestCount
-        expr: request_count > 100
+        expr: sum(rate(http_requests_total[1m])) > 100
         for: 1m
         labels:
-          severity: critical
+          severity: warning
         annotations:
-          summary: "High request count detected"
-          description: "Request count is greater than 100 for more than 1 minute."
+          summary: "High request count"
+          description: "The total number of requests across all servers is high"
+      - alert: HighScaleRequestCount
+        expr: sum(rate(scale_requests_total[1m])) > 10
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High scale request count"
+          description: "The number of requests to the /scale endpoint is high"

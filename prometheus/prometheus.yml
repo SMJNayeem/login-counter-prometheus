@@ -1,24 +1,23 @@
 global:
-  scrape_interval: 15s
-
-rule_files:
-  - 'alert.rules.yml'
+  scrape_interval: 5s
 
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-            - 'alertmanager:9093'
+          - 'alertmanager:9093'
+
+rule_files:
+  - 'alert.rules.yml'
 
 scrape_configs:
-  - job_name: 'server1'
-    static_configs:
-      - targets: ['server1:3001']
+  - job_name: 'node'
+    file_sd_configs:
+      - files:
+          - '/etc/prometheus/targets/*.json'
+        refresh_interval: 5s
 
-  - job_name: 'server2'
+  - job_name: 'nginx'
     static_configs:
-      - targets: ['server2:3002']
-
-  - job_name: 'server3'
-    static_configs:
-      - targets: ['server3:3003']
+      - targets:
+        - 'nginx:80'

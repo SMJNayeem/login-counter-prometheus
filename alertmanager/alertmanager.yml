@@ -2,9 +2,18 @@ global:
   resolve_timeout: 5m
 
 route:
-  receiver: 'webhook_receiver'
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receivers:
+    - 'scaler'
+    - 'alert-service'
 
 receivers:
-  - name: 'webhook_receiver'
+  - name: 'scaler'
     webhook_configs:
-      - url: 'http://alert-service:4000/alert'
+      - url: 'http://scaler:3000/alert'
+  - name: 'alert-service'
+    webhook_configs:
+      - url: 'http://alert-service:3000/alert'

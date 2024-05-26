@@ -1,4 +1,4 @@
-# alert-service/Dockerfile
+# scaler/Dockerfile
 FROM node:14-alpine
 
 WORKDIR /app
