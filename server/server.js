@@ -27,3 +27,8 @@ app.get('/scale', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+// // Set up metrics endpoint using prom-client HTTP registry
+// app.get('/metrics', promClient.register.metrics());
+
+// setupMetricsEndpoint(app); // Call setupMetrics after app definition

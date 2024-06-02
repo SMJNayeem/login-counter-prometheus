@@ -1,3 +1,68 @@
+# version: '3'
+# networks:
+#   app-network:
+
+# services:
+#   server1:
+#     build: ./server
+#     networks:
+#       - app-network
+
+#   server2:
+#     build: ./server
+#     networks:
+#       - app-network
+
+#   server3:
+#     build: ./server
+#     networks:
+#       - app-network
+
+#   nginx:
+#     build: ./nginx
+#     ports:
+#       - "80:80"
+#     networks:
+#       - app-network
+#     depends_on:
+#       - server1
+#       - server2
+#       - server3
+      
+#   prometheus:
+#     image: prom/prometheus
+#     volumes:
+#       - ./prometheus:/etc/prometheus
+#       - ./targets:/etc/prometheus/targets
+#     ports:
+#       - "9090:9090"
+#     command:
+#       - '--config.file=/etc/prometheus/prometheus.yml'
+#       - '--storage.tsdb.path=/prometheus'
+#       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+#       - '--web.console.templates=/usr/share/prometheus/consoles'
+#     networks:
+#       - app-network
+
+#   alertmanager:
+#     image: prom/alertmanager
+#     volumes:
+#       - ./alertmanager:/etc/alertmanager
+#     ports:
+#       - "9093:9093"
+
+#   scaler:
+#     build: ./scaler
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#     ports:
+#       - "3000:3000"
+
+#   alert-service:
+#     build: ./alert-service
+#     ports:
+#       - "4000:3000"
+
 version: '3'
 networks:
   app-network:
@@ -28,7 +93,7 @@ services:
       - server1
       - server2
       - server3
-      
+
   prometheus:
     image: prom/prometheus
     volumes:
@@ -50,15 +115,3 @@ services:
       - ./alertmanager:/etc/alertmanager
     ports:
       - "9093:9093"
-
-  scaler:
-    build: ./scaler
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "3000:3000"
-
-  alert-service:
-    build: ./alert-service
-    ports:
-      - "4000:3000"

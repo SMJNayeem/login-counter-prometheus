@@ -12,9 +12,13 @@ const setupMetricsEndpoint = (app, scaleCounter) => {
     res.on('finish', () => {
       const elapsed = process.hrtime(start);
       const elapsedMs = (elapsed[0] * 1000) + (elapsed[1] / 1000000);
+
+      // Safely access req.route.path
+      const routePath = req.route && req.route.path ? req.route.path : 'unknown_route';
+      
       requestCounter.inc({
         method: req.method,
-        route: req.route.path,
+        route: routePath,
         status_code: res.statusCode,
       }, elapsedMs);
     });

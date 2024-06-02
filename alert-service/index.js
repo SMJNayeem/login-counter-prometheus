@@ -6,12 +6,10 @@ app.use(express.json());
 
 app.post('/alert', (req, res) => {
   const alerts = req.body.alerts;
-  alerts.forEach(alert => {
-    console.log(`Alert: ${alert.labels.alertname}`);
-    console.log(`Summary: ${alert.annotations.summary}`);
-    console.log(`Description: ${alert.annotations.description}`);
-    console.log('-----');
-  });
+  for (const alert of alerts) {
+    console.log('Received alert:', alert);
+    // Process the alert here
+  }
   res.status(200).send('Alert received');
 });
 

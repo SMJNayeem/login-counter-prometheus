@@ -4,17 +4,13 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.post('/alert', (req, res) => {
-  const alerts = req.body.alerts;
-  alerts.forEach(alert => {
-    console.log(`Alert: ${alert.labels.alertname}`);
-    console.log(`Summary: ${alert.annotations.summary}`);
-    console.log(`Description: ${alert.annotations.description}`);
-    console.log('-----');
-  });
-  res.status(200).send('Alert received');
+app.post('/webhook', (req, res) => {
+  const payload = req.body;
+  console.log('Received webhook payload:', payload);
+  // Process the webhook payload here
+  res.status(200).send('Webhook received');
 });
 
 app.listen(PORT, () => {
-  console.log(`Webhook server is running on port ${PORT}`);
+  console.log(`Webhook service is running on port ${PORT}`);
 });

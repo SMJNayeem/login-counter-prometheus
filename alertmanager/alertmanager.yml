@@ -6,9 +6,10 @@ route:
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 1h
-  receivers:
-    - 'scaler'
-    - 'alert-service'
+  receiver: 'scaler'  # default receiver, this field was missing
+  routes:
+    - receiver: 'scaler'
+    - receiver: 'alert-service'
 
 receivers:
   - name: 'scaler'
@@ -17,3 +18,6 @@ receivers:
   - name: 'alert-service'
     webhook_configs:
       - url: 'http://alert-service:3000/alert'
+  - name: 'webhook'  # New receiver
+    webhook_configs:
+      - url: 'http://webhook:3000/alert'
